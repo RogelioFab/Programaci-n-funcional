@@ -1,0 +1,31 @@
+
+import Data.List (partition)
+media :: [Double] -> Double
+media xs = sum xs / fromIntegral (length xs)
+
+desviacionEstandar :: [Double] -> Double
+desviacionEstandar xs =
+    let mu = media xs
+        n = fromIntegral (length xs)
+        sumaCuadrados = sum $ map (\x -> (x - mu) ^ 2) xs
+    in sqrt (sumaCuadrados / n)
+
+puntuacionTipica :: [Double] -> Double -> Double
+puntuacionTipica muestra valor =
+    let mu = media muestra
+        sigma = desviacionEstandar muestra
+    in (valor - mu) / sigma
+
+valoresAtipicos :: [Double] -> [Double]
+valoresAtipicos muestra =
+    let mu = media muestra
+        sigma = desviacionEstandar muestra
+    
+        atipicos = filter (\x -> abs ((x - mu) / sigma) > 3) muestra
+    in atipicos
+
+main :: IO ()
+main = do
+    let muestra = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1000] 
+        atipicos = valoresAtipicos muestra
+    putStrLn $ "Valores atípicos encontrados: " ++ show atipicos
