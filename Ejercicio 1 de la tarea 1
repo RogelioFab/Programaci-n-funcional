@@ -1,0 +1,13 @@
+precioCesta :: [(Double, Double)] -> (Double -> Double -> Double) -> Double
+precioCesta cesta funcion = sum $ map (\(precio, descuento) -> funcion precio descuento) cesta
+
+aplicarDescuento :: Double -> Double -> Double
+aplicarDescuento precio descuento = precio - (precio * descuento / 100)
+
+aplicarIVA :: Double -> Double -> Double
+aplicarIVA precio porcentaje = precio + (precio * porcentaje / 100)
+
+main :: IO ()
+main = do
+    let cesta = [(1000, 15), (500, 19), (100, 12)]
+    putStrLn $ "Precio con IVA aplicado: " ++ show (precioCesta cesta aplicarIVA)
