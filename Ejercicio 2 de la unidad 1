@@ -1,0 +1,14 @@
+aplicarFuncion :: (a -> b) -> [a] -> [b]
+aplicarFuncion _ [] = [] -- Caso base: lista vacía
+aplicarFuncion f (x:xs) = f x : aplicarFuncion f xs -- Aplicar la función a la cabeza de la lista y recursivamente al resto de la lista
+
+-- Una función de ejemplo para probar
+cuadrado :: Int -> Int
+cuadrado x = x * x
+
+resultado :: [Int]
+resultado = aplicarFuncion cuadrado [1, 2, 3, 4]
+
+main :: IO ()
+main = do
+  putStrLn $ "Resultado: " ++ show resultado
