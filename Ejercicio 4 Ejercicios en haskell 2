@@ -8,7 +8,7 @@ asignarCalificacion nota
     | nota >= 85 = "Notable"
     | nota >= 75 = "Bueno"
     | nota >= 70 = "Suficiente"
-    | otherwise = "Desempeño insuficiente"
+    | otherwise = "Desempeno insuficiente"
 
 calificacionesAlumno :: Map String Int -> Map String String
 calificacionesAlumno asignaturas = Map.fromList [(map toUpper asignatura, asignarCalificacion nota) | (asignatura, nota) <- Map.toList asignaturas]
