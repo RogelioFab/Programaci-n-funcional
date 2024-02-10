@@ -1,0 +1,13 @@
+calificaciones :: [Int] -> [String]
+calificaciones [] = [] 
+calificaciones (x:xs)
+    | x >= 95   = "Excelente" : calificaciones xs
+    | x >= 85   = "Notable" : calificaciones xs
+    | x >= 75   = "Bueno" : calificaciones xs
+    | x >= 70   = "Suficiente" : calificaciones xs
+    | otherwise = "Desempeno insuficiente" : calificaciones xs
+
+
+main :: IO ()
+main = do
+    print $ calificaciones [90, 65, 80, 100, 72, 92, 32, 89]
