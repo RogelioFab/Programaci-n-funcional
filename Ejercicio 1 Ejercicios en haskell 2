@@ -1,0 +1,32 @@
+import Text.Printf (printf)
+
+funciones :: [(String, Double -> Double)]
+funciones =
+    [ ("seno", sin)
+    , ("coseno", cos)
+    , ("tangente", tan)
+    , ("exponencial", exp)
+    , ("logaritmo neperiano", log)
+    ]
+calculartabla :: Double -> (Double -> Double) -> IO ()
+calculartabla valor funcion = mapM_ (mostrarFila funcion) [1..valor]
+    where mostrarFila f x = printf "%d\t%.6f\n" (round x :: Int) (f x)
+
+calculadoracientifica :: IO ()
+calculadoracientifica = do
+    putStrLn "Funciones disponibles:"
+    mapM_ (\(nombre, _) -> putStrLn $ "1.- " ++ nombre) funciones
+    putStrLn ""
+    putStrLn "Por favor, ingrese el valor máximo para calcular la tabla:"
+    valorstr <- getLine
+    let valor = read valorstr :: Double
+    putStrLn "Ahora, ingrese el nombre de la función a aplicar:"
+    funcionstr <- getLine
+    case lookup funcionstr funciones of
+        Just funcion -> do
+            putStrLn $ "Tabla de valores para la función \"" ++ funcionstr ++ "\":"
+            calculartabla valor funcion
+        Nothing -> putStrLn "¡Función no válida! Por favor, ingrese una función de la lista."
+
+main :: IO ()
+main = calculadoracientifica
