@@ -24,6 +24,6 @@ main = do
                          , Inmueble { año = 2005, metros = 75, habitaciones = 3, garaje = True, zona = 'B' }
                          , Inmueble { año = 2015, metros = 90, habitaciones = 2, garaje = False, zona = 'A' }
                          ]
-        presupuesto = 100000.0 
+        presupuesto = 120000.0 
         inmueblesEncontrados = buscarInmuebles listaInmuebles presupuesto
     mapM_ print inmueblesEncontrados
