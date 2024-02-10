@@ -1,0 +1,29 @@
+data Inmueble = Inmueble { año :: Int
+                         , metros :: Int
+                         , habitaciones :: Int
+                         , garaje :: Bool
+                         , zona :: Char
+                         } deriving (Show)
+
+calcularPrecio :: Inmueble -> Double
+calcularPrecio inmueble =
+    let precioBase = fromIntegral (metros inmueble) * 1000 + fromIntegral (habitaciones inmueble) * 5000 + if garaje inmueble then 15000 else 0
+        factorZona = if zona inmueble == 'B' then 1.5 else 1.0
+        antiguedad = 2024 - año inmueble  
+    in fromIntegral precioBase * (1 - fromIntegral antiguedad / 100) * factorZona
+
+buscarInmuebles :: [Inmueble] -> Double -> [Inmueble]
+buscarInmuebles inmuebles presupuesto =
+    filter ((<= presupuesto) . calcularPrecio) inmuebles
+
+main :: IO ()
+main = do
+    let listaInmuebles = [ Inmueble { año = 2000, metros = 100, habitaciones = 3, garaje = True, zona = 'A' }
+                         , Inmueble { año = 2012, metros = 60, habitaciones = 2, garaje = True, zona = 'B' }
+                         , Inmueble { año = 1980, metros = 120, habitaciones = 4, garaje = False, zona = 'A' }
+                         , Inmueble { año = 2005, metros = 75, habitaciones = 3, garaje = True, zona = 'B' }
+                         , Inmueble { año = 2015, metros = 90, habitaciones = 2, garaje = False, zona = 'A' }
+                         ]
+        presupuesto = 100000.0 
+        inmueblesEncontrados = buscarInmuebles listaInmuebles presupuesto
+    mapM_ print inmueblesEncontrados
